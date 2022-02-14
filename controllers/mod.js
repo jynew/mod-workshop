@@ -11,7 +11,7 @@ function uploadFile(file) {
     // 最终要保存到的文件夹目录
     const dir = path.join(__dirname, `${dirPath}`)
     // 检查文件夹是否存在如果不存在则新建文件夹
-    // checkDirExist(dir)
+    checkDirExist(dir)
     // 组装路径
     filePath = dir + `/${file.name}`
     // 创建可写流
@@ -28,7 +28,7 @@ function uploadFile(file) {
 //检查文件夹是否存在
 function checkDirExist(p) {
     if (!fs.existsSync(p)) {
-        fs.mkdirSync(p)
+        fs.mkdirSync(p, { recursive: true })
     }
 }
 
