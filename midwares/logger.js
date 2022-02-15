@@ -1,13 +1,13 @@
 // 日志打印中间件
-const fs = require('fs');
-const path = require('path');
-const log4js = require('log4js');
-const config = require('../config');
+const fs = require('fs')
+const path = require('path')
+const log4js = require('log4js')
+const config = require('../config')
 
 // 这个是判断是否有 logs 目录，没有就创建。
 const logPath = path.resolve(config.logPath)
 if (!fs.existsSync(logPath)) {
-    fs.mkdirSync(logPath);
+    fs.mkdirSync(logPath)
 }
 
 // 配置 log4js
@@ -34,10 +34,10 @@ log4js.configure({
             level: "info"
         }
     }
-});
+})
 
-const logger = log4js.getLogger('[Default]');
-// logger.info('this is a info');
+const logger = log4js.getLogger('[Default]')
+// logger.info('this is a info')
 // logger.debug("debug")
 // logger.error("error")
 // logger.fatal("fatal")asdf
@@ -49,16 +49,16 @@ const logger = log4js.getLogger('[Default]');
  */
 
 const loggerMiddleware = async (ctx, next) => {
-    console.log('打印日志信息');
+    console.log('打印日志信息')
     // 开始时间
-    const start = new Date();
-    await next();
+    const start = new Date()
+    await next()
     // 结束时间
-    const ms = new Date() - start;
+    const ms = new Date() - start
     // 打印出请求的参数
-    const remoteAddress = ctx.headers['x-forwarded-for'] || ctx.ip || ctx.ips || (ctx.socket && (ctx.socket.remoteAddress || (ctx.socket.socket && ctx.socket.socket.remoteAddress)));
-    let logText = `${ctx.method} ${ctx.status} ${ctx.url} 请求参数： ${JSON.stringify(ctx.request.body)} 响应参数： ${JSON.stringify(ctx.body)} - ${remoteAddress} - ${ms}ms`;
-    logger.info(logText);
-};
+    const remoteAddress = ctx.headers['x-forwarded-for'] || ctx.ip || ctx.ips || (ctx.socket && (ctx.socket.remoteAddress || (ctx.socket.socket && ctx.socket.socket.remoteAddress)))
+    let logText = `${ctx.method} ${ctx.status} ${ctx.url} 请求参数： ${JSON.stringify(ctx.request.body)} 响应参数： ${JSON.stringify(ctx.body)} - ${remoteAddress} - ${ms}ms`
+    logger.info(logText)
+}
 
-module.exports = { logger, loggerMiddleware };
+module.exports = { logger, loggerMiddleware }

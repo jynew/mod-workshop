@@ -2,7 +2,6 @@ const Koa = require('koa')
 const app = new Koa({ proxy: true })
 const json = require('koa-json')
 const onerror = require('koa-onerror')
-// const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const path = require('path')
 const cors = require('koa-cors')
@@ -46,6 +45,6 @@ app.use(cors())
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
-});
+})
 
 module.exports = app

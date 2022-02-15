@@ -71,20 +71,12 @@ Mod.init(
         pass: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
-        },
-        createDate: {
-            type: DataTypes.DATE,
-            field: 'create_date'
-        },
-        updateDate: {
-            type: DataTypes.DATE,
-            field: 'update_date'
         }
     }, {
     underscored: true, //额外字段以下划线来分割
-    timestamps: false, //取消默认生成的createdAt、updatedAt字段
-    createdAt: "created_at",
-    updatedAt: "updated_at",
+    timestamps: true, //取消默认生成的createdAt、updatedAt字段
+    createdAt: "created_date",
+    updatedAt: "updated_date",
     freezeTableName: true, // Model 对应的表名将与model名相同
     comment: "mod表类",
     // paranoid: true      //虚拟删除
@@ -96,8 +88,8 @@ Mod.init(
 
     // 创建表格
     ; (async () => {
-        await Mod.sync();
-        console.log("Mod表刚刚(重新)创建！");
+        await Mod.sync()
+        console.log("Mod表刚刚(重新)创建！")
         // 这里是代码
     })()
 // 定义的模型是类本身

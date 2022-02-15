@@ -2,10 +2,10 @@ const fs = require('fs')
 const path = require('path')
 // 导入模型
 const Mod = require('../models/mod')
-const dirPath = '../public/upload'
 
 // 单文件上传
-function uploadFile(file) {
+function uploadFile(file, dirPath) {
+    if(!file) return {}
     // 读取文件流
     const fileReader = fs.createReadStream(file.path)
     // 最终要保存到的文件夹目录
@@ -48,9 +48,11 @@ module.exports = {
         const req = ctx.request.body
         if (req.name && req.version) {
             try {
-                const file = ctx.request.files.file
-                const { uri } = uploadFile(file)
-                const data = await Mod.createMod({ uri, ...req })
+                const { file, img } = ctx.request.files
+                const dirPath = `../mod/${Date.now()}`
+                const { uri } = uploadFile(file, dirPath)
+                const { uri: poster } = uploadFile(img, dirPath)
+                const data = await Mod.createMod({ uri, poster, ...req })
                 ctx.body = { msg: 1003, data }
             } catch (err) {
                 ctx.body = { code: -1, msg: 1000 }

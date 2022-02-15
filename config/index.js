@@ -28,6 +28,6 @@ const config = {
   table: {
 
   }
-};
+}
 
 module.exports = config;
