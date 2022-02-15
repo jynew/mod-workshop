@@ -137,6 +137,8 @@ export default {
           description && formData.append('description', description)
           formData.append('file', file)
           this.imageUrl && formData.append('img', img)
+          const key = 'upload'
+          this.$message.loading({ content: '上传中，请勿关闭...', key, duration: 0 })
           axios({
             method: 'post',
             url: '/createMod',
@@ -148,11 +150,14 @@ export default {
           .then((res) => {
             const { data: { msg, data } } = res
             if (data) {
-              this.$message.success(msg)
+              this.$message.success({ content: msg, key })
             } else {
-              this.$message.error(msg)
+              this.$message.error({ content: msg, key })
             }
             this.reset()
+          })
+          .catch(() => {
+            this.$message.error({ content: '上传失败', key })
           })
         }
       })
