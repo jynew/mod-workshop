@@ -1,7 +1,7 @@
 // 公共配置文件
 const config = {
   // 项目启动监听的端口
-  port: 3000,
+  port: 3001,
 
   publicPath: 'public',
   

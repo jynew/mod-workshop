@@ -1,7 +1,10 @@
 const fs = require('fs')
 const path = require('path')
+const publicIp = require('public-ip')
 // 导入模型
 const Mod = require('../models/mod')
+// config
+const config = require('../config')
 
 // 单文件上传
 function uploadFile(file, dirPath) {
@@ -9,7 +12,7 @@ function uploadFile(file, dirPath) {
     // 读取文件流
     const fileReader = fs.createReadStream(file.path)
     // 最终要保存到的文件夹目录
-    const dir = path.join(__dirname, `${dirPath}`)
+    const dir = path.join(__dirname, `../${config.publicPath}/${dirPath}`)
     // 检查文件夹是否存在如果不存在则新建文件夹
     checkDirExist(dir)
     // 组装路径
@@ -21,7 +24,7 @@ function uploadFile(file, dirPath) {
 
     return {
         name: file.name,
-        uri: filePath
+        uri: `${dirPath}/${file.name}`
     }
 }
 
@@ -49,10 +52,11 @@ module.exports = {
         if (req.name && req.version) {
             try {
                 const { file, img } = ctx.request.files
-                const dirPath = `../mod/${Date.now()}`
+                const dirPath = req.name
                 const { uri } = uploadFile(file, dirPath)
                 const { uri: poster } = uploadFile(img, dirPath)
-                const data = await Mod.createMod({ uri, poster, ...req })
+                const ip = await publicIp.v4()
+                const data = await Mod.createMod({ uri: `http://${ip}:${config.port}/${uri}`, poster: `http://${ip}:${config.port}/${poster}`, ...req })
                 ctx.body = { msg: 1003, data }
             } catch (err) {
                 ctx.body = { code: -1, msg: 1000 }
