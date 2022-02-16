@@ -108,7 +108,7 @@ export default {
           axios.post('/api/auditById', {
             id: this.id,
             key,
-            pass: pass === 'true' ? true : false
+            pass
           })
           .then((res) => {
             this.visible = false

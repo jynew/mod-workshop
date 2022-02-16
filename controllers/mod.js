@@ -87,7 +87,7 @@ module.exports = {
         if (req.id && req.key && req.pass) {
             try {
                 if (req.key === '') {
-                    await Mod.updateById({ id: req.id, pass: req.pass})
+                    await Mod.updateById({ id: req.id, pass: req.pass === 'true' ? true : false })
                     ctx.body = { msg: 1006 }
                 } else {
                     ctx.body = { code: -1, msg: 1002 } 
