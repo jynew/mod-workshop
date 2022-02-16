@@ -56,7 +56,7 @@ module.exports = {
                 const { uri } = uploadFile(file, dirPath)
                 const { uri: poster } = uploadFile(img, dirPath)
                 const ip = await publicIp.v4()
-                const data = await Mod.createMod({ uri: `http://${ip}:${config.port}/${uri}`, poster: `http://${ip}:${config.port}/${poster}`, ...req })
+                const data = await Mod.createMod({ uri: `http://${ip}:${config.port}/${uri}`, poster: poster && `http://${ip}:${config.port}/${poster}`, ...req })
                 ctx.body = { msg: 1003, data }
             } catch (err) {
                 ctx.body = { code: -1, msg: 1000 }
@@ -78,6 +78,35 @@ module.exports = {
             }
         } else {
             ctx.body = { code: -1, msg: 1002 }
+        }
+        await next()
+    },
+
+    async auditById(ctx, next) {
+        const req = ctx.request.body
+        if (req.id && req.key && req.pass) {
+            try {
+                if (req.key === '') {
+                    await Mod.updateById({ id: req.id, pass: req.pass})
+                    ctx.body = { msg: 1006 }
+                } else {
+                    ctx.body = { code: -1, msg: 1002 } 
+                }
+            } catch (err) {
+                ctx.body = { code: -1, msg: 1000 }
+            }
+        } else {
+            ctx.body = { code: -1, msg: 1002 }
+        }
+        await next();
+    },
+
+    async getPassMods(ctx, next) {
+        try {
+            const data = await Mod.getPassMods()
+            ctx.body = { msg: 1001, data }
+        } catch (err) {
+            ctx.body = { code: -1, msg: 1000, }
         }
         await next()
     }

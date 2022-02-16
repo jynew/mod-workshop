@@ -36,7 +36,32 @@ class Mod extends Model {
             }
         })
     }
+    
+    /**
+     * @description: 根据id修改pass
+     * @param {*} id
+     * @param {*} pass
+     * @return {*}  返回修改的数据
+     */    
+    static async updateById({ id, pass }) {
+        return await this.update({ pass }, {
+            where: {
+                id
+            }
+        })
+    }
 
+    /**
+     * @description: 查询通过的mod
+     * @return {*} 返回数据
+     */
+    static async getPassMods() {
+        return await this.findAll({
+            where: {
+                pass: true
+            }
+        })
+    }
 }
 // 初始化表结构
 Mod.init(

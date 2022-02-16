@@ -3,7 +3,7 @@ module.exports = {
     open: true,
     proxy: {
       '/': {
-        target: 'http://localhost:3000',
+        target: 'http://localhost:3001',
         changeOrigin: true
       }
     }

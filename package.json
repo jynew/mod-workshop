@@ -30,7 +30,8 @@
     "public-ip": "4.0.4",
     "pug": "^2.0.3",
     "sequelize": "^6.9.0",
-    "vue": "^2.6.14"
+    "vue": "^2.6.14",
+    "vue-router": "3.5.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.15",
