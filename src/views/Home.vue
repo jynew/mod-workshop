@@ -141,7 +141,7 @@ export default {
           this.$message.loading({ content: '上传中，请勿关闭...', key, duration: 0 })
           axios({
             method: 'post',
-            url: '/createMod',
+            url: '/api/createMod',
             data: formData,
             headers: {
               'Content-Type': 'multipart/form-data'

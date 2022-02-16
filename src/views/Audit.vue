@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     handleMods() {
-      axios.get('/getAllMods')
+      axios.get('/api/getAllMods')
         .then((response) => {
           const { data: { data } } = response
           this.data = data
@@ -105,7 +105,7 @@ export default {
           this.confirmLoading = true
           console.log(values)
           const { key, pass } = values
-          axios.post('/auditById', {
+          axios.post('/api/auditById', {
             id: this.id,
             key,
             pass: pass === 'true' ? true : false
@@ -113,13 +113,9 @@ export default {
           .then((res) => {
             this.visible = false
             this.confirmLoading = false
-            const { data: { msg, data } } = res
-            if (data) {
-              this.$message.success({ content: msg })
-            } else {
-              this.$message.error({ content: msg })
-            }
-
+            const { data: { code, msg } } = res
+            code === -1 ? this.$message.error(msg) : this.$message.success(msg)
+            this.handleMods()
           })
         }
       })
