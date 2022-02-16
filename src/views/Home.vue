@@ -176,7 +176,8 @@ export default {
   margin-top: 60px;
 }
 .main {
-  width: 800px;
+  max-width: 800px;
+  width: 80%;
   margin: 0 auto;
 }
 </style>
