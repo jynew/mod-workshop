@@ -1,6 +1,7 @@
 <template>
   <div>
     <a-table bordered :data-source="data">
+      <a-table-column key="platform" title="平台" data-index="platform" />
       <a-table-column key="name" title="名称" data-index="name" />
       <a-table-column key="version" title="版本号" data-index="version" />
       <a-table-column key="tags" title="标签" data-index="tags">
@@ -45,7 +46,7 @@
       @cancel="handleCancel"
     >
       <a-form class="form" :form="form">
-        <a-form-item label="名称">
+        <a-form-item label="密钥">
           <a-input
             type="text"
             placeholder="请输入密钥"
@@ -103,7 +104,6 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           this.confirmLoading = true
-          console.log(values)
           const { key, pass } = values
           axios.post('/api/auditById', {
             id: this.id,

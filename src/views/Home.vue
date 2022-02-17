@@ -2,6 +2,22 @@
   <div class="home">
     <div class="main">
       <a-form class="form" :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }" @submit="handleSubmit">
+        <a-form-item label="平台">
+          <a-select
+            placeholder="请选择平台"
+            v-decorator="['platform', { rules: [{ required: true, message: '请选择平台!' }] }]"
+          >
+            <a-select-option value="Windows">
+              Windows
+            </a-select-option>
+            <a-select-option value="Android">
+              Android
+            </a-select-option>
+            <a-select-option value="MacOS">
+              MacOS
+            </a-select-option>
+          </a-select>
+        </a-form-item>
         <a-form-item label="名称">
           <a-input
             type="text"
@@ -126,11 +142,12 @@ export default {
       e.preventDefault()
       this.form.validateFields((err, values) => {
         if (!err) {
-          const { name, version, tagArr = [], description = '', uploadFile, uploadImg } = values
+          const { platform, name, version, tagArr = [], description = '', uploadFile, uploadImg } = values
           const tags = tagArr.join(',')
           const file = uploadFile.file
           const img = uploadImg && uploadImg.file
           const formData = new FormData()
+          formData.append('platform', platform)
           formData.append('name', name)
           formData.append('version', version)
           tags && formData.append('tags', tags)

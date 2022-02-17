@@ -13,8 +13,9 @@ class Mod extends Model {
      * @param {*} poster
      * @return {*} 返回添加的数据
      */
-    static async createMod({ name, version, tags, uri, description, poster }) {
+    static async createMod({ platform, name, version, tags, uri, description, poster }) {
         return await this.create({
+            platform,
             name,
             version,
             tags,
@@ -71,6 +72,10 @@ Mod.init(
             allowNull: false, //非空
             autoIncrement: true, //自动递增
             primaryKey: true //主键
+        },
+        platform: {
+            type: DataTypes.STRING,
+            allowNull: false
         },
         name: {
             type: DataTypes.STRING,
