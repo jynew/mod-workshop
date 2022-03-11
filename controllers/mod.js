@@ -49,10 +49,10 @@ module.exports = {
 
     async createMod(ctx, next) {
         const req = ctx.request.body
-        if (req.name && req.version) {
+        if (req.platform && req.name && req.version) {
             try {
                 const { file, img } = ctx.request.files
-                const dirPath = req.name
+                const dirPath = req.platform + '/' + req.name
                 const { uri } = uploadFile(file, dirPath)
                 const { uri: poster } = uploadFile(img, dirPath)
                 const ip = await publicIp.v4()
